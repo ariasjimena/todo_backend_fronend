@@ -4,6 +4,7 @@ const User = require('../models/user');
 
 //middleware para verificar el token de autenticacion 
 async function authMiddleware(req, res, next) {
+
     const token = req.header('Authorization');
 
     if (!token) {
@@ -11,8 +12,13 @@ async function authMiddleware(req, res, next) {
     }
 
     try {
-        const decodedToken = jwt.verify(token, config.jwtSecret);
-        const user = await User.findById(decodedToken.userId);
+        jwt.verify(token.split(' ')[1], config.jwtSecret, async (err, decoded)=>{
+            if(err) return res.json('error')
+            console.log(decoded)
+
+       
+
+        const user = await User.findById(decoded.userId).lean();
 
         if (!user) {
             return res.status(401).json({ message: 'Invalid token. User not found' });
@@ -22,6 +28,7 @@ async function authMiddleware(req, res, next) {
         req.user = user;
 
         next();
+    });
     }
     catch (error) {
         return res.status(401).json({ message: 'Invalid token' });

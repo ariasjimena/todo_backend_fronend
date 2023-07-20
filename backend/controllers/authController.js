@@ -5,9 +5,13 @@ const config = require('../config/config');
 
 //fincion para generar un token
 function generateToken(userId) {
+    console.log(userId)
     const token = jwt.sign({ userId }, config.jwtSecret, { expiresIn: '1h'});
     return token;
 }
+
+// verificar token
+
 
 //funcion para registrar un nuevo usuario
 async function registerUser(req, res) {
@@ -53,12 +57,13 @@ async function loginUser(req, res) {
         }
 
         //verificar la contrasena ingresada con la contrasena alamcenada
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        const passwordMatch = bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
-
-        return res.status(200).json({ message: 'Successful login' });
+        const token = generateToken(user._id)
+        console.log(token)
+        return res.status(200).json({ message: 'Successful login', token });
     }
     catch (error) {
         return res.status(500).json({ message: 'Failed to login', error });

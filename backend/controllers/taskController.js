@@ -58,6 +58,7 @@ async function editTask(req, res) {
         return res.status(200).json(updatedTask);
     }
     catch (error) {
+       
         return res.status(500).json({ message: 'Error editing task', error });
     }
 }
@@ -75,7 +76,7 @@ async function deleteTask(req, res) {
         }
 
         //eliminar la tarea de la base de datos
-        await task.remove();
+        await task.deleteOne({_id:taskId});
 
         return res.status(200).json({ message: 'Deleted task' });
     }
