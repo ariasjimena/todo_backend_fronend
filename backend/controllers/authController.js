@@ -10,9 +10,6 @@ function generateToken(userId) {
     return token;
 }
 
-// verificar token
-
-
 //funcion para registrar un nuevo usuario
 async function registerUser(req, res) {
     const { name, email, password } = req.body;

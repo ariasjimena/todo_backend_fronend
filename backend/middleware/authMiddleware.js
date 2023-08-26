@@ -16,8 +16,6 @@ async function authMiddleware(req, res, next) {
             if(err) return res.json('error')
             console.log(decoded)
 
-       
-
         const user = await User.findById(decoded.userId).lean();
 
         if (!user) {
