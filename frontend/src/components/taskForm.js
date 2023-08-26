@@ -10,7 +10,7 @@ function CreateTask() {
 
     try {
       // Realizar la petición para crear una tarea
-      const response = await instance.post('/tasks', {
+      const response = await instance.post('/tasks/tasks', {
         title,
         description,
       });
@@ -46,6 +46,8 @@ function CreateTask() {
           />
         </div>
         <button className="btn btn-primary" type="submit">Create</button>
+        <button className="btn btn-primary" type="submit">Edit</button>
+        <button className="btn btn-primary" type="submit">Delete</button>
       </form>
     </div>
   );
