@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import instance from '../services/api';
 
 function CreateTask() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const Navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,6 +20,8 @@ function CreateTask() {
       console.log('Task created:', response.data);
       setTitle('');
       setDescription('');
+
+      Navigate('/listTask')
     } catch (error) {
       console.error('Error creating task:', error);
     }
@@ -46,8 +50,6 @@ function CreateTask() {
           />
         </div>
         <button className="btn btn-primary" type="submit">Create</button>
-        <button className="btn btn-primary" type="submit">Edit</button>
-        <button className="btn btn-primary" type="submit">Delete</button>
       </form>
     </div>
   );

@@ -7,7 +7,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+      e.preventDefault();
         try {
             const response = await instance.post('/auth/login', { email, password });
             const { token } = response.data;
@@ -16,7 +17,7 @@ const Login = () => {
             window.alert('Inicio de sesion exitoso');
 
             //redireccionar a la pagina de tareas
-            navigate('/taks')
+            navigate('/listTask')
         }
         catch (error) {
             console.error('Error logging in:', error);
